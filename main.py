@@ -1,14 +1,19 @@
 from fastapi import FastAPI
-import typing
+from  typing import Optional
+from pydantic import BaseModel
+
+from .model.db import Blog
 
 app = FastAPI()
 
 @app.get('/blogs')
 def blogs(limit = 10, published: bool = True, sort: str | None = None):
     if published:
-        return {'data': f'{limit} blogs from the db'}
+        return {'data': f'{limit} blogs from the db and sort: {sort}'}
     else:
         return {'data': f'all blogs from the db'}
+    
+
 @app.get('/blog/unpublished')
 def unpublished_blogs():
     return {'data': 'Blogs that was never published'}
@@ -22,3 +27,7 @@ def get_blog_id(id: int):
 @app.get('/about')
 def about():
     return {'data':{'about page': {'name', 'surname', 'contact info'}}}
+
+@app.post('/blog')
+def create_blog(blog: Blog):
+    return {'data': f'Welcome to {blog.title}'}
