@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from  typing import Optional
 from pydantic import BaseModel
 
-from .model.db import Blog
+
 
 app = FastAPI()
 
@@ -28,6 +28,3 @@ def get_blog_id(id: int):
 def about():
     return {'data':{'about page': {'name', 'surname', 'contact info'}}}
 
-@app.post('/blog')
-def create_blog(blog: Blog):
-    return {'data': f'Welcome to {blog.title}'}
